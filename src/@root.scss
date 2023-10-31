@@ -1,0 +1,67 @@
+.parent {
+  color: red;
+
+  @at-root .child {
+    color: #000000;
+  }
+}
+
+@supports (display: grid) {
+  @media print {
+    .page {
+      width: 8in;
+
+      @at-root (without: media) {
+        color: red;
+      }
+    }
+  }
+}
+
+@media print {
+  .page {
+    width: 800px;
+
+    a {
+      color: red;
+
+      @at-root (without: media) {
+        span {
+          color: #00f;
+        }
+      }
+    }
+  }
+}
+
+@media print {
+  .page {
+    width: 800px;
+
+    a {
+      color: red;
+
+      @at-root (without: media rule) {
+        span {
+          color: #00f;
+        }
+      }
+    }
+  }
+}
+
+@media print {
+  .page {
+    width: 800px;
+
+    a {
+      color: red;
+
+      @at-root (without: all) {
+        span {
+          color: #00f;
+        }
+      }
+    }
+  }
+}

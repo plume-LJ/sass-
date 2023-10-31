@@ -1,0 +1,166 @@
+@mixin large-text {
+  font: {
+    family: Arial;
+    size: 20px;
+    weight: bold;
+  }
+
+  color: #ff0000;
+}
+
+@mixin clearfix {
+  display: inline-block;
+
+  &:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+  }
+
+  * html & {
+    height: 1px;
+  }
+}
+
+.page-title {
+  @include large-text;
+  @include clearfix;
+  padding: 4px;
+  margin-top: 10px;
+}
+
+@mixin silly-links {
+  a {
+    color: blue;
+    background-color: red;
+  }
+}
+
+@include silly-links;
+
+@mixin compound {
+  @include highlighted-background;
+  @include header-text;
+}
+
+@mixin highlighted-background {
+  background-color: #fc0;
+}
+
+@mixin header-text {
+  font-size: 20px;
+}
+
+.div {
+  @include compound;
+}
+
+@mixin sexy-border($color, $width) {
+  border: {
+    color: $color;
+    width: $width;
+    style: dashed;
+  }
+}
+p {
+  @include sexy-border(blue, 1in);
+}
+
+@mixin sexy-border($color, $width: 1in) {
+  border: {
+    color: $color;
+    width: $width;
+    style: dashed;
+  }
+}
+p {
+  @include sexy-border(blue);
+}
+h1 {
+  @include sexy-border(blue, 2in);
+}
+
+/* Keyword Arguments */
+p {
+  @include sexy-border($color: blue);
+}
+h1 {
+  @include sexy-border($color: blue, $width: 2in);
+}
+
+/* Variable Arguments */
+@mixin box-shadow($shadows...) {
+  -moz-box-shadow: $shadows;
+  -webkit-box-shadow: $shadows;
+  box-shadow: $shadows;
+}
+.shadows {
+  @include box-shadow(0px 4px 5px #666, 2px 6px 10px #999);
+}
+
+@mixin colors($text, $background, $border) {
+  color: $text;
+  background-color: $background;
+  border-color: $border;
+}
+$values: #ff0000, #00ff00, #0000ff;
+.primary {
+  @include colors($values...);
+}
+
+@mixin stylish-mixin($color, $width) {
+  border: {
+    color: $color;
+    width: $width;
+    style: dashed;
+  }
+}
+
+@mixin wrapped-stylish-mixin($args...) {
+  font-weight: bold;
+  @include stylish-mixin($args...);
+}
+.stylish {
+  // The $width argument will get passed on to "stylish-mixin" as a keyword
+  @include wrapped-stylish-mixin(#00ff00, $width: 100px);
+}
+
+@mixin apply-to-ie6-only {
+  * html {
+    @content;
+  }
+}
+@include apply-to-ie6-only {
+  #logo {
+    background-image: url(/logo.gif);
+  }
+}
+
+$color: white;
+@mixin colors($color: blue) {
+  background-color: $color;
+  @content;
+  border-color: $color;
+}
+.colors {
+  @include colors {
+    color: $color;
+  }
+}
+.colors1 {
+  @include colors($color);
+}
+
+@mixin smartphone {
+  @content;
+}
+
+#sidebar {
+  $sidebar-width: 300px;
+  width: $sidebar-width;
+  @include smartphone {
+    width: $sidebar-width / 3;
+  }
+}

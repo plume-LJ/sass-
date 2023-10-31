@@ -1,0 +1,39 @@
+@use "sass:math";
+$sector-size: 80px;
+
+.sector {
+  display: inline-block;
+  width: $sector-size;
+  height: $sector-size;
+  border-radius: 50%;
+}
+
+@mixin colors($colorList...) {
+  $length: length($colorList);
+
+  $space: math.div(360deg, $length);
+  $half-space: math.ceil(math.div($space, 2));
+  $sector: "from";
+  $sector: $sector (-$half-space);
+
+  // $sector: "from $half-space";
+  @for $i from 1 through $length {
+    $deg: $space * ($i - 1);
+    $nextDeg: $space * $i;
+    $color: nth($colorList, $i);
+    // $sector: #{$sector}, #{$color} #{$deg}, #{$color} #{$nextDeg};
+    $sector: #{$sector}, #{$color} #{$deg} #{$nextDeg};
+  }
+
+  background-image: conic-gradient($sector);
+}
+
+.color1 {
+  @include colors(black, white, red, blue, aqua, yellow, pink, gray);
+}
+
+.color2 {
+  @include colors(#4c84ff, #41d9cc, #71bf39, #f2853d);
+}
+
+

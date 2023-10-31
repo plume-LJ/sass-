@@ -1,0 +1,22 @@
+/* @use 'sass:color';
+@debug lighten(#e1d7d2, 30%);
+ */
+
+@import "2.scss";
+@import "foo.css";
+@import "foo" screen;
+@import "http://foo.com/bar";
+@import url(foo);
+@import "rounded-corners", "text-shadow";
+$family: unquote("Droid+Sans");
+@import url("http://fonts.googleapis.com/css?family=\#{$family}");
+/* 如果需要导入 SCSS 或者 Sass 文件，但又不希望将其编译为 CSS，
+只需要在文件名前添加下划线，这样会告诉 Sass 不要编译这些文件，
+但导入语句中却不需要添加下划线。 */
+@import "colors";
+
+#main {
+  @import "example";
+}
+
+
